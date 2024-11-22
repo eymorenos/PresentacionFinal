@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistemas Telemáticos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    /* Fuente futurista */
+    body {
+      background-color: #0a0a0a;
+      color: #e0e0e0;
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 50px 20px;
+      background: linear-gradient(135deg, #0ff, #00f);
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 1.2em;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #0ff;
+    }
+
+    section {
+      padding: 50px 20px;
+      border-bottom: 1px solid #333;
+    }
+
+    section h2 {
+      font-size: 2.5em;
+      color: #0ff;
+      margin-bottom: 30px;
+    }
+
+    .osi-content, .voip-content, .funcionamiento-content, .rsvp-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .osi-layers {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .osi-layers li {
+      background-color: #111;
+      margin: 5px 0;
+      padding: 15px;
+      cursor: pointer;
+      border: 1px solid #0ff;
+      transition: background-color 0.3s;
+    }
+
+    .osi-layers li:hover {
+      background-color: #0ff;
+      color: #000;
+    }
+
+    .layer-description {
+      margin-top: 20px;
+      min-height: 100px;
+    }
+
+    #simulate-voip, #simulate-rsvp {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #0ff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #simulate-voip:hover, #simulate-rsvp:hover {
+      background-color: #00f;
+      color: #fff;
+    }
+
+    #voip-simulation, #rsvp-simulation {
+      margin-top: 20px;
+      min-height: 100px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #111;
+      border-top: 1px solid #333;
+    }
+
+    footer p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sistemas Telemáticos : Presentacion Final</h1>
+    <nav>
+      <ul>
+        <li><a href="#osi">Modelo OSI</a></li>
+        <li><a href="#voip">Servicio Voz IP</a></li>
+        <li><a href="#funcionamiento-voip">Funcionamiento Voz IP</a></li>
+        <li><a href="#rsvp">Protocolo RSVP</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="osi">
+    <h2>Funciones de las Capas del Modelo OSI</h2>
+    <div class="osi-content">
+      <ul class="osi-layers">
+        <li data-layer="7">Capa 7 - Aplicación</li>
+        <li data-layer="6">Capa 6 - Presentación</li>
+        <li data-layer="5">Capa 5 - Sesión</li>
+        <li data-layer="4">Capa 4 - Transporte</li>
+        <li data-layer="3">Capa 3 - Red</li>
+        <li data-layer="2">Capa 2 - Enlace de Datos</li>
+        <li data-layer="1">Capa 1 - Física</li>
+      </ul>
+      <div class="layer-description">
+        <p>Selecciona una capa para ver su función.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="voip">
+    <h2>Servicio Voz IP</h2>
+    <div class="voip-content">
+      <p>La Voz sobre Protocolo de Internet (Voz IP) permite realizar llamadas telefónicas a través de redes de datos...</p>
+    </div>
+  </section>
+
+  <section id="funcionamiento-voip">
+    <h2>Funcionamiento del Servicio Voz IP</h2>
+    <div class="funcionamiento-content">
+      <p>El servicio Voz IP convierte señales de audio analógicas en datos digitales que pueden transmitirse por Internet...</p>
+      <button id="simulate-voip">Simular Llamada Voz IP</button>
+      <div id="voip-simulation"></div>
+    </div>
+  </section>
+
+  <section id="rsvp">
+    <h2>Protocolo de Señalización RSVP</h2>
+    <div class="rsvp-content">
+      <p>El protocolo RSVP (Resource Reservation Protocol) es utilizado en redes MPLS para reservar recursos de red y garantizar la calidad de servicio (QoS)...</p>
+      <button id="simulate-rsvp">Simular Protocolo RSVP</button>
+      <div id="rsvp-simulation"></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Edwin Moreno</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const header = document.querySelector('header');
+      header.style.opacity = 0;
+      setTimeout(() => {
+        header.style.transition = 'opacity 2s';
+        header.style.opacity = 1;
+      }, 500);
+
+      const osiLayers = document.querySelectorAll('.osi-layers li');
+      const layerDescription = document.querySelector('.layer-description p');
+      const layerFunctions = {
+        '7': 'La capa de Aplicación proporciona servicios de red a las aplicaciones del usuario.',
+        '6': 'La capa de Presentación traduce los datos entre el formato de la red y el formato que puede usar un equipo.',
+        '5': 'La capa de Sesión establece, gestiona y finaliza sesiones entre aplicaciones.',
+        '4': 'La capa de Transporte proporciona transferencia de datos confiable y control de flujo.',
+        '3': 'La capa de Red determina cómo se enrutan los datos entre dispositivos.',
+        '2': 'La capa de Enlace de Datos proporciona transferencia de datos nodo a nodo y detección de errores.',
+        '1': 'La capa Física define las especificaciones eléctricas y físicas de los dispositivos.'
+      };
+
+      osiLayers.forEach(layer => {
+        layer.addEventListener('click', () => {
+          const layerNumber = layer.getAttribute('data-layer');
+          layerDescription.textContent = layerFunctions[layerNumber];
+        });
+      });
+
+      const simulateVoipButton = document.getElementById('simulate-voip');
+      const voipSimulationOutput = document.getElementById('voip-simulation');
+
+      simulateVoipButton.addEventListener('click', () => {
+        voipSimulationOutput.textContent = 'Iniciando llamada Voz IP...';
+        setTimeout(() => {
+          voipSimulationOutput.textContent = 'Convirtiendo audio a datos digitales...';
+        }, 1000);
+        setTimeout(() => {
+          voipSimulationOutput.textContent = 'Transmitiendo datos a través de la red...';
+        }, 2000);
+        setTimeout(() => {
+          voipSimulationOutput.textContent = 'Recibiendo datos y reconvirtiendo a audio...';
+        }, 3000);
+        setTimeout(() => {
+          voipSimulationOutput.textContent = 'Llamada completada exitosamente.';
+        }, 4000);
+      });
+
+      const simulateRsvpButton = document.getElementById('simulate-rsvp');
+      const rsvpSimulationOutput = document.getElementById('rsvp-simulation');
+
+      simulateRsvpButton.addEventListener('click', () => {
+        rsvpSimulationOutput.textContent = 'Iniciando proceso de reserva de recursos...';
+        setTimeout(() => {
+          rsvpSimulationOutput.textContent = 'Enviando mensaje PATH al destino...';
+        }, 1000);
+        setTimeout(() => {
+          rsvpSimulationOutput.textContent = 'El destino recibe PATH y responde con RESV...';
+        }, 2000);
+        setTimeout(() => {
+          rsvpSimulationOutput.textContent = 'Confirmando reserva de recursos en cada nodo...';
+        }, 3000);
+        setTimeout(() => {
+          rsvpSimulationOutput.textContent = 'Reserva de recursos completada. Tráfico de datos puede comenzar.';
+        },
+        4000);
+      });
+    });
+  </script>
+</body>
+</html>
